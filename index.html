@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Dos ist</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    nav {
+
+        height: 9vh;
+        width: 100vw;
+        background-color: darkslategray;
+        border: 2px solid red;
+
+
+    }
+
+    .container {
+        display: grid;
+        height: 9vh;
+        width: 100vw;
+        /* border:1px solid red; */
+        grid-template-columns: 18vh 47vh;
+        list-style: square inside;
+        grid-gap: 29vw;
+
+
+    }
+
+
+
+    .item1 {
+        color: aliceblue;
+        background-color: darkslategray;
+        text-decoration: none;
+        height: 9vh;
+        font-size: 2.5vh;
+
+    }
+
+    .item2 {
+
+        color: rgb(210, 252, 255);
+        background-color: darkslategrey;
+        height: 9vh;
+        font-size: 3vh;
+      
+
+
+    }
+
+    ul li {
+        text-decoration: none;
+    }
+
+    #titl {
+        width: 20vw;
+        height: 5vh;
+
+    }
+
+    #desc {
+        width: 25vw;
+        height: 10vh;
+    }
+
+    .title {
+
+        text-align: center;
+        position: relative;
+        top: 1vh;
+    }
+
+    .description {
+
+        text-align: center;
+        position: relative;
+        top: 1vh;
+    }
+
+    .addtolist {
+
+        color: aliceblue;
+        background-color: blue;
+        width: 65px;
+        height: 25px;
+        border: 2px solid mediumblue;
+        border-radius: 5px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-style: bold;
+    }
+
+    #add {
+        position: relative;
+        left: 61vw;
+        top: 4vh;
+    }
+
+    #clr {
+        position: relative;
+        left: 62vw;
+        top: 4vh;
+    }
+
+    table {
+        border: 1px solid grey;
+        width: 60vw;
+        position: relative;
+        top: 12vh;
+        left: 20vw;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        text-align: center;
+
+    }
+
+    .footer {
+        color: black;
+        background-color: grey;
+        width: 100vw;
+        height: 7vh;
+        text-align: center;
+        position: relative;
+        top: 90vh;
+    }
+</style>
+
+<body>
+    <nav>
+        <div class="container">
+            <div class="item1">
+                <ul>
+                    <li><a href="/project2(to-do-list)/index.html"
+                            style="text-decoration:none ;color:aliceblue">Home</a></li>
+                    <li><a href="/project2(to-do-list)/about.html"
+                            style="text-decoration:none ;color:aliceblue">About</a></li>
+                    <li><a href="/project2(to-do-list)/contact.html"
+                            style="text-decoration:none ;color:aliceblue">Contact</a></li>
+                </ul>
+            </div>
+            <div class="item2">
+                <h3>Your To Dos List website</h3>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="title">
+
+        <label for="title">Title: </label>
+        <input type="text" id="titl" placeholder="Yours list title.." rows="4" column="4">
+
+    </div>
+    <br>
+    <div class="description">
+
+        <label for="description">Description: </label>
+        <input type="text" id="desc" placeholder="Describe your title..." rows="4" column="4">
+
+    </div>
+    <div class="button">
+        <button type="submit" class="addtolist" id="add">Add to list</button>
+        <button type="clear" class="addtolist" id="clr" onclick="clrstr()">Clear All</button>
+    </div>
+
+    <div class="table">
+        <table rules="all">
+            <thead>
+                <caption><h3 style="color: rgb(12, 6, 102);">To Dos-List:- </h3></caption>
+                <tr>
+                    <th>Sl.No.</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tablebody">
+                <tr>
+                    <th>1.</th>
+                    <td>abc</td>
+                    <td>ac sdahdas sjhs</td>
+                    <td><button type="submit" class="addtolist" id="delete">Delete</button></td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+    <footer class="footer">
+        Copywrite content all right reserver to xyz company since 1991.
+    </footer>
+
+
+    <script>
+        
+        function getanupdate(){
+               // console.log("click on add to list");
+            tl = document.getElementById("titl").value;
+            dl = document.getElementById("desc").value;
+            if (localStorage.getItem('itemsJson') == null) {
+                itemJsonArray = [];
+               
+                        itemJsonArray.push([tl, dl]);
+                 localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+              
+
+
+            }
+            else {
+                itemJsonArrayStr = localStorage.getItem('itemsJson');
+                itemJsonArray = JSON.parse(itemJsonArrayStr);
+                
+                        itemJsonArray.push([tl, dl]);
+                 localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+                    }
+       
+        update()
+        
+    }
+
+
+        function update() {
+           
+            if (localStorage.getItem('itemsJson') == null) {
+                itemJsonArray = [];
+                localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+
+
+            }
+            else {
+                itemJsonArrayStr = localStorage.getItem('itemsJson');
+                itemJsonArray = JSON.parse(itemJsonArrayStr);
+               
+
+            }
+            //populate the table:-
+            let tablebody = document.getElementById("tablebody");
+            let str = "";//created a blank string
+            itemJsonArray.forEach((element, index) => {
+                str += `
+        <tr>
+                    <th scope="row">${index + 1}</th>
+                    <td>${element[0]}</td>
+                    <td>${element[1]}</td>
+                    <td><button type="submit" class="addtolist" id="delete" onclick="deleteindex(${index})">Delete</button></td>
+                </tr>`
+
+            });
+
+            tablebody.innerHTML = str;
+
+        }
+        add = document.getElementById("add");
+        add.addEventListener('click', getanupdate);
+        update();
+
+      
+
+        function clrstr() {
+            if (confirm("Do you really want to clear list ?")){
+            localStorage.clear();
+             update()
+            }
+        }
+
+
+
+    function deleteindex(itemIndex){
+    console.log("index is deleted");
+    itemJsonArrayStr = localStorage.getItem('itemsJson');
+    itemJsonArray = JSON.parse(itemJsonArrayStr);
+    //delete itemindex array from the array
+    itemJsonArray.splice(itemIndex,1);
+    localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+    update();
+}
+
+
+
+
+
+    </script>
+</body>
+
+</html>
